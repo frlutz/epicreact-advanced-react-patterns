@@ -87,17 +87,21 @@ function useToggle({
   const [state, dispatch] = React.useReducer(reducer, initialState)
   const onIsControlled = controlledOn != null
 
-  useControlledSwitchWarning(controlledOn, 'on', 'useToggle')
-  useOnReadOnlyWarning(
-    controlledOn,
-    'on',
-    'usToggle',
-    !!onChange,
-    readOnly,
-    'readOnly',
-    'initialOn',
-    'onChange',
-  )
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useControlledSwitchWarning(controlledOn, 'on', 'useToggle')
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useOnReadOnlyWarning(
+      controlledOn,
+      'on',
+      'usToggle',
+      !!onChange,
+      readOnly,
+      'readOnly',
+      'initialOn',
+      'onChange',
+    )
+  }
 
   const on = onIsControlled ? controlledOn : state.on
   function dispatchWithOnChange(action) {
